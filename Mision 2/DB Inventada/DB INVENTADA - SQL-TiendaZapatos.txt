@@ -1,0 +1,50 @@
+CREATE DATABASE tienda_zapatos;
+
+USE tienda_zapatos;
+
+#Tabla Cliente
+CREATE TABLE Cliente (
+    idCliente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    apellido VARCHAR(100),
+    correo VARCHAR(100),
+    telefono VARCHAR(15),
+    direccion VARCHAR(255)
+);
+
+#Tabla Categoria
+CREATE TABLE Categoria (
+    idCategoria INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100)
+);
+
+#Tabla Producto
+CREATE TABLE Producto (
+    idProducto INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    descripcion TEXT,
+    precio DECIMAL(10, 2),
+    cantidad_disponible INT,
+    idCategoria INT,
+    FOREIGN KEY (idCategoria) REFERENCES Categoria(idCategoria)
+);
+
+#Tabla Venta
+CREATE TABLE Venta (
+    idVenta INT AUTO_INCREMENT PRIMARY KEY,
+    idCliente INT,
+    fecha DATE,
+    total DECIMAL(10, 2),
+    FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente)
+);
+
+#Tabla Factura
+CREATE TABLE Factura (
+    idFactura INT AUTO_INCREMENT PRIMARY KEY,
+    idVenta INT,
+    idProducto INT,
+    cantidad INT,
+    precio_unitario DECIMAL(10, 2),
+    FOREIGN KEY (idVenta) REFERENCES Venta(idVenta),
+    FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
+);
